@@ -5,6 +5,7 @@ import android.os.Bundle
 import entity.ItemData
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.listView
+import org.jetbrains.anko.textView
 import org.jetbrains.anko.verticalLayout
 
 
@@ -13,8 +14,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         verticalLayout {
-            listView {
-
+            textView {
+                text = "hello world"
             }
         }
     }
