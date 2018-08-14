@@ -1,22 +1,36 @@
 package xyz.dot_lab.prichandb
 
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import db.CoordinateDatabaseOpenHelper
 import entity.ItemData
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.listView
-import org.jetbrains.anko.textView
-import org.jetbrains.anko.verticalLayout
+import org.jetbrains.anko.db.select
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var dataBase: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        verticalLayout {
-            textView {
-                text = "hello world"
-            }
+        val dbHelper = CoordinateDatabaseOpenHelper.getInstance(this)
+        setDatabase(dbHelper)
+        dbHelper.use {
+            val itemList = select("bland_gy").parseList(db.ItemDataParser())
+            Log.d("onCreate",itemList[1].name)
+        }
+    }
+    private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
+        try {
+            helper.createEmptyDataBase()
+            dataBase = helper.openDatabase()
+        } catch (e: IOException) {
+            e.stackTrace
+        } catch (e: SQLiteException) {
+            e.stackTrace
         }
     }
 }

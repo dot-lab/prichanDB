@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PrichanDB</string>
+    <string name="app_name">コーデリストつくってみた！</string>
+    <string name="hello">Hello,world</string>
 </resources>
