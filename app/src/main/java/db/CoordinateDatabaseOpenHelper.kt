@@ -7,14 +7,13 @@ import android.util.Log
 import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
 import java.io.*
 
-class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context,"coordinate.db",null,1) {
+class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context,"coordinate.db",null,3) {
     companion object {
         private val DB_NAME = "coordinate.db"
         private val DB_NAME_ASSET = "coordinate.db"
-        private val DB_VERSION = 2
+        private val DB_VERSION = 3
         private lateinit var myContext: Context
         private lateinit var databasePath: File
-        private lateinit var myDatabase: SQLiteDatabase
         private var instance: CoordinateDatabaseOpenHelper? = null
 
         fun getInstance(context: Context): CoordinateDatabaseOpenHelper {
@@ -31,7 +30,10 @@ class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(co
     }
 
     fun createEmptyDataBase() {
-        if (!checkDataBaseExists()) {
+        if (checkDataBaseExists()) {
+            // データベースはすでに存在する
+        }
+        else {
             readableDatabase
             try {
                 // データベースのコピー
@@ -54,12 +56,13 @@ class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(co
     }
     private fun checkDataBaseExists(): Boolean {
         val dbPath = databasePath.absolutePath
-        var checkDb: SQLiteDatabase
+        val checkDb: SQLiteDatabase
         try {
             checkDb = SQLiteDatabase.openDatabase(dbPath,null,SQLiteDatabase.OPEN_READONLY)
         } catch (e: SQLiteException) {
             // データベースは存在していない
             e.stackTrace
+            Log.d("checkDataBaseExists()","データベースが存在しません")
             return false
         }
         // データベースが存在しなければfalseを返す
@@ -78,6 +81,7 @@ class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(co
         // データベースが存在していて,最新ではない
         val f = File(dbPath)
         f.delete()
+        Log.d("checkDataBaseExists()","データベースが最新ではありませんでした")
         return false
     }
     private fun copyDataBaseFromAsset() {

@@ -10,11 +10,11 @@ class ItemDataParser: MapRowParser<ItemData> {
                 columns["category"] as String,
                 columns["name"] as String,
                 columns["bland"] as String,
-                columns["reality"] as Int,
+                columns["reality"] as Long,
                 columns["color"] as String,
                 columns["type"] as String,
-                columns["iine"] as Int,
-                columns["has"] as Int
+                columns["iine"] as Long,
+                columns["has"] as Long
         )
     }
 }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setDatabase(dbHelper)
         dbHelper.use {
             val itemList = select("bland_gy").parseList(db.ItemDataParser())
-            Log.d("onCreate",itemList[1].name)
+            Log.d("onCreate()",itemList[0].name)
         }
     }
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
             helper.createEmptyDataBase()
             dataBase = helper.openDatabase()
         } catch (e: IOException) {
+            Log.d("setDatabase()","データベースの作成に失敗しました")
             e.stackTrace
         } catch (e: SQLiteException) {
+            Log.d("setDatabase()","データベースを読み込めません")
             e.stackTrace
         }
     }

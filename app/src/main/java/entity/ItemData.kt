@@ -4,8 +4,9 @@ data class ItemData(var number:String,
                     var category: String,
                     var name: String,
                     var bland: String,
-                    var reality: Int,
+                    var reality: Long,
                     var color: String,
                     var type: String,
-                    var iine: Int,
-                    var has: Int)
+                    var iine: Long,
+                    var has: Long
+)
