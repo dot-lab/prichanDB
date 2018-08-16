@@ -18,22 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val dbHelper = CoordinateDatabaseOpenHelper.getInstance(this)
-        setDatabase(dbHelper)
-        dbHelper.use {
-            val c: Cursor = rawQuery("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name DESC",null)
-            var isEoF: Boolean = c.moveToFirst()
-            var tableName = ""
-            while (isEoF) {
-                tableName += c.getString(1) + "\n"
-                isEoF = c.moveToNext()
-            }
-            Log.d("onCreate()",tableName)
 
-//            データをテーブルから取得してItemDataにparseする
-//            val itemList = select("bland_gy").parseList(db.ItemDataParser())
-//            Log.d("onCreate()",itemList[0].name)
-        }
     }
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
         try {
@@ -46,6 +31,21 @@ class MainActivity : AppCompatActivity() {
             Log.d("setDatabase()","データベースを読み込めません")
             e.stackTrace
         }
+    }
+    private fun getGroupNameList(): MutableList<String> {
+        var groupNameList: MutableList<String> = mutableListOf()
+        val dbHelper = CoordinateDatabaseOpenHelper.getInstance(this)
+        setDatabase(dbHelper)
+        dbHelper.use {
+            val c: Cursor = rawQuery("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name DESC",null)
+            var isEoF: Boolean = c.moveToFirst()
+            while (isEoF) {
+                groupNameList.add(c.getString(1))
+                isEoF = c.moveToNext()
+            }
+            Log.d("getGroupNameList()",groupNameList[0])
+        }
+        return groupNameList
     }
 }
 
