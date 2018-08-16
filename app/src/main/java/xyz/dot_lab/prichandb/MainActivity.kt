@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        getGroupNameList()
     }
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
         try {
@@ -43,7 +43,9 @@ class MainActivity : AppCompatActivity() {
                 groupNameList.add(c.getString(1))
                 isEoF = c.moveToNext()
             }
-            Log.d("getGroupNameList()",groupNameList[0])
+            for (i in groupNameList.iterator()) {
+                Log.d("getGroupNameList()", i)
+            }
         }
         return groupNameList
     }
