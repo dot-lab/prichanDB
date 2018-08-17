@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    // データベースを呼び出す
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
         try {
             helper.createEmptyDataBase()
@@ -40,12 +41,13 @@ class MainActivity : AppCompatActivity() {
             e.stackTrace
         }
     }
+    // グループ名のリストを取得
     private fun getGroupNameList(): MutableList<String> {
         val groupNameList: MutableList<String> = mutableListOf()
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(this)
         setDatabase(dbHelper)
         dbHelper.use {
-            val c: Cursor = rawQuery("SELECT * FROM sqlite_master WHERE type='table' ORDER BY name DESC",null)
+            val c: Cursor = rawQuery("SELECT * FROM sqlite_master WHERE type='table' AND name!='android_metadata' ORDER BY name DESC",null)
             var isEoF: Boolean = c.moveToFirst()
             while (isEoF) {
                 groupNameList.add(c.getString(1))
