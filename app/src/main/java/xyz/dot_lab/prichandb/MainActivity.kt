@@ -1,15 +1,15 @@
 package xyz.dot_lab.prichandb
 
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
+import android.view.View
+import android.widget.AdapterView
 import db.CoordinateDatabaseOpenHelper
-import entity.ItemData
-import org.jetbrains.anko.db.select
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateGroupListAdapter
@@ -21,10 +21,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val groupNameList = getGroupNameList()
+        var intent = Intent(applicationContext,CoordinateListActivity::class.java)
+
         verticalLayout {
             listView {
                 adapter = CoordinateGroupListAdapter(context,groupNameList)
+            }.onItemClickListener = AdapterView.OnItemClickListener {
+                adapterView: AdapterView<*>, view1: View, position: Int, id: Long ->
+                // タップしたグループ名を取得
+                var groupName =  adapterView.getItemAtPosition(position).toString()
+                // インテントでアクティビティを変更
+                intent.putExtra("groupName",groupName)
+                startActivity(intent)
             }
         }
     }
