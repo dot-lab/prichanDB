@@ -10,6 +10,9 @@ import android.widget.TextView
 import db.CoordinateDatabaseOpenHelper
 import entity.ItemData
 import org.jetbrains.anko.db.select
+import org.jetbrains.anko.listView
+import org.jetbrains.anko.verticalLayout
+import ui.CoordinateGroupListAdapter
 import java.io.IOException
 
 
@@ -18,7 +21,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getGroupNameList()
+        val groupNameList = getGroupNameList()
+        verticalLayout {
+            listView {
+                adapter = CoordinateGroupListAdapter(context,groupNameList)
+            }
+        }
     }
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
         try {
@@ -33,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun getGroupNameList(): MutableList<String> {
-        var groupNameList: MutableList<String> = mutableListOf()
+        val groupNameList: MutableList<String> = mutableListOf()
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(this)
         setDatabase(dbHelper)
         dbHelper.use {
@@ -43,9 +51,7 @@ class MainActivity : AppCompatActivity() {
                 groupNameList.add(c.getString(1))
                 isEoF = c.moveToNext()
             }
-            for (i in groupNameList.iterator()) {
-                Log.d("getGroupNameList()", i)
-            }
+            c.close()
         }
         return groupNameList
     }

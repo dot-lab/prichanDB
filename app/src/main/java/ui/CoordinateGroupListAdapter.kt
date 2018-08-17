@@ -13,7 +13,7 @@ class CoordinateGroupListAdapter(var context: Context, groupList: MutableList<St
     }
 
     override fun getItemId(position: Int): Long {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return position.toLong()
     }
 
     override fun getCount(): Int {
@@ -21,7 +21,7 @@ class CoordinateGroupListAdapter(var context: Context, groupList: MutableList<St
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View =
-            (convertView as? CoordinateGroupListUI) ?: CoordinateGroupListUI(context).apply {
+            (convertView as? CoordinateGroupListUI) ?: CoordinateGroupListUI(context,list).apply {
                 createView(context.UI {  })
             }.apply {
                 update(position)
