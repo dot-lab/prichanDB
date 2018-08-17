@@ -8,6 +8,9 @@ import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.db.select
+import org.jetbrains.anko.listView
+import org.jetbrains.anko.verticalLayout
+import ui.CoordinateListAdapter
 
 
 class CoordinateListActivity: AppCompatActivity() {
@@ -23,7 +26,12 @@ class CoordinateListActivity: AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        Log.d("CoordinateListActivity",coordinateList[0].name)
+        verticalLayout {
+            listView {
+                adapter = CoordinateListAdapter(applicationContext,coordinateList)
+            }
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
