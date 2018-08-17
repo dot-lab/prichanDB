@@ -7,11 +7,11 @@ import android.util.Log
 import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
 import java.io.*
 
-class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context,"coordinate.db",null,4) {
+class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context,"coordinate.db",null,5) {
     companion object {
-        private val DB_NAME = "coordinate.db"
-        private val DB_NAME_ASSET = "coordinate.db"
-        private val DB_VERSION = 4
+        private const val DB_NAME = "coordinate.db"
+        private const val DB_NAME_ASSET = "coordinate.db"
+        private const val DB_VERSION = 5
         private lateinit var myContext: Context
         private lateinit var databasePath: File
         private var instance: CoordinateDatabaseOpenHelper? = null

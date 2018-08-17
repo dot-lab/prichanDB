@@ -8,12 +8,12 @@ import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.db.select
-import java.util.*
+
 
 class CoordinateListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var intent = intent
+        val intent = intent
         val selectedGroupName = intent.getStringExtra("groupName")
         val coordinateList = getCoordinateList(selectedGroupName)
 
@@ -31,7 +31,7 @@ class CoordinateListActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun getCoordinateList(groupName: String): List<ItemData> {
+    private fun getCoordinateList(groupName: String): List<ItemData> {
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
         var coordinateList: List<ItemData> = mutableListOf()
         dbHelper.openDatabase()
