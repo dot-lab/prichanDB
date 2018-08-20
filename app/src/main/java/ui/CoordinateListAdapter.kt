@@ -14,7 +14,7 @@ import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListAdapter(private val coordinateList: List<ItemData>, val context: Context): BaseAdapter() {
+class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
     // hasList => コーディネートリストとは別のDBから読み書きする
     // number と has のペア（PCH1-01,1）ならPCH1-01を所持している,という感じ
     override fun getItem(position: Int): Any {
@@ -135,13 +135,14 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, val cont
                 linearLayout {
                     // inner1 name
                     id = R.id.inner
+                    padding = dip(10)
                     orientation = LinearLayout.HORIZONTAL
                     textView {
                         // name
                         id = R.id.name
                         text = coordinateList[position].name
                         padding = dip(5)
-                        textSize = 18f
+                        textSize = 16f
                         gravity = Gravity.LEFT
                     }.lparams(wrapContent, matchParent)
                 }.lparams(matchParent, wrapContent)

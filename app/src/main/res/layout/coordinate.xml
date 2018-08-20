@@ -44,8 +44,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:baselineAlignBottom="false"
-            android:longClickable="true"
-            app:srcCompat="@drawable/logo_prismstone" />
+            android:longClickable="true" />
     </LinearLayout>
 
     <LinearLayout
