@@ -3,6 +3,7 @@ package ui
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,9 @@ import java.io.IOException
 import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
-    // hasList => コーディネートリストとは別のDBから読み書きする
-    // number と has のペア（PCH1-01,1）ならPCH1-01を所持している,という感じ
+    companion object {
+        var checkedList: Map<String,Int> = mutableMapOf()
+    }
     override fun getItem(position: Int): Any {
         return coordinateList[position]
     }
@@ -44,17 +46,15 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     orientation = LinearLayout.HORIZONTAL
                     lparams(wrapContent, matchParent)
                     checkBox {
+                        // TODO DB関係
                         id = R.id.has
-                        // このままだとぜんぶチェックはずれる
-                        when (coordinateList[position].has.toInt()) {
-                            1 -> {
-                                isChecked = true
-                            }
-                            0 -> {
-                                isChecked = false
-                            }
-                        }
                         gravity = Gravity.CENTER
+                        setOnClickListener(View.OnClickListener {
+                            if (isChecked) {
+                                checkedList += coordinateList[position].number to 1
+                                Log.d("onClick","$checkedList")
+                            }
+                        })
                     }.lparams(wrapContent, matchParent)
                     textView {
                         // number
@@ -174,7 +174,8 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
             }
         }
     }
-   private fun getResourceFromAssets(path: String): Bitmap{
+    // 引数でAssets内の画像パスを指定して,Bitmapで返す
+    private fun getResourceFromAssets(path: String): Bitmap {
         var iStrm: InputStream = context.assets.open(path)
         return try {
             BitmapFactory.decodeStream(iStrm)
