@@ -4,8 +4,11 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.LinearLayout
 import entity.ItemData
+import kotlinx.android.synthetic.main.coordinate.view.*
 import org.jetbrains.anko.*
+import xyz.dot_lab.prichandb.R
 
 class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemData>): BaseAdapter() {
 
@@ -26,21 +29,44 @@ class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemD
         return with(parent!!.context) {
             verticalLayout {
                 padding = dip(10)
+                linearLayout {
+                    orientation = LinearLayout.HORIZONTAL
+                    checkBox {
+
+                    }.lparams(wrapContent, wrapContent)
+                    textView {
+                        // number
+                        text = coordinateList[position].number
+                        padding = dip(5)
+                    }.lparams(wrapContent, wrapContent)
+                    textView {
+                        // reality
+                        when (coordinateList[position].reality.toInt()) {
+                            1 -> {
+                                text = "N"
+                            }
+                            2 -> {
+                                text = "R"
+                            }
+                            3 -> {
+                                text = "SR"
+                            }
+                            4 -> {
+                                text = "PR"
+                            }
+                            5 -> {
+                                text = "KR"
+                            }
+                        }
+                        padding = dip(5)
+                    }.lparams(wrapContent, wrapContent)
+                }.lparams(wrapContent, wrapContent)
                 textView {
-                    padding = dip(5)
-                    text = coordinateList[position].number
-                }
-                textView {
-                    padding = dip(5)
+                    // name
                     text = coordinateList[position].name
-                }
+                    padding = dip(5)
+                }.lparams(wrapContent, wrapContent)
             }
         }
     }
-//    override fun getView(potision: Int, convertView: View?, parent: ViewGroup?): View =
-//            (convertView as? CoordinateListUI) ?: CoordinateListUI(context,coordinateList).apply {
-//                createView(context.UI{ })
-//            }.apply {
-//
-//            }
 }

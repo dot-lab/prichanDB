@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">コーデリストつくってみた！</string>
     <string name="hello">Hello,world</string>
+    <string name="kr">KR</string>
+    <string name="pr">PR</string>
+    <string name="sr">SR</string>
+    <string name="r">R</string>
+    <string name="n">N</string>
 </resources>
