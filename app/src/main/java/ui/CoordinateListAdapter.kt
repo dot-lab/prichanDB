@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
+import db.HasItemDatabaseHelper
 import entity.ItemData
 import org.jetbrains.anko.*
 import xyz.dot_lab.prichandb.R
@@ -17,7 +18,7 @@ import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
     companion object {
-        var checkedList: Map<String,Int> = mutableMapOf()
+        var checkedList: List<String> = mutableListOf()
     }
     override fun getItem(position: Int): Any {
         return coordinateList[position]
@@ -46,13 +47,15 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     orientation = LinearLayout.HORIZONTAL
                     lparams(wrapContent, matchParent)
                     checkBox {
-                        // TODO DB関係
                         id = R.id.has
                         gravity = Gravity.CENTER
                         setOnClickListener(View.OnClickListener {
                             if (isChecked) {
-                                checkedList += coordinateList[position].number to 1
-                                Log.d("onClick","$checkedList")
+                                checkedList += coordinateList[position].number
+                                Log.d("checkedList", checkedList.toString())
+                            } else {
+                                checkedList -= coordinateList[position].number
+                                Log.d("checkedList", checkedList.toString())
                             }
                         })
                     }.lparams(wrapContent, matchParent)

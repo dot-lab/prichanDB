@@ -1,19 +1,19 @@
 package xyz.dot_lab.prichandb
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import db.CoordinateDatabaseOpenHelper
-import db.HaslistDatabaseHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.db.*
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
-
+import db.HasItemDatabaseHelper
 
 class CoordinateListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +28,13 @@ class CoordinateListActivity: AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
 
         }
-
         verticalLayout {
             listView {
                 adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
-
+        val helper = HasItemDatabaseHelper(applicationContext,db.HasItemDatabaseHelper.DB_NAME,null,db.HasItemDatabaseHelper.DB_VERSION)
+        helper.checkFromDatabase("DW-01")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,16 +43,16 @@ class CoordinateListActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val helper = HasItemDatabaseHelper(applicationContext,db.HasItemDatabaseHelper.DB_NAME,null,db.HasItemDatabaseHelper.DB_VERSION)
         when (item?.itemId) {
             R.id.save -> {
-                writeToDataBase()
+                helper.writeToDatabase()
             }
         }
         finish()
         return super.onOptionsItemSelected(item)
     }
-
-
+    // コーデアイテムのリストを取得
     private fun getCoordinateList(groupName: String): List<ItemData> {
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
         var coordinateList: List<ItemData> = listOf()
@@ -61,20 +61,5 @@ class CoordinateListActivity: AppCompatActivity() {
            coordinateList = select(groupName).parseList(ItemDataParser())
         }
         return coordinateList
-    }
-    // DBに保存
-    // チェックボックスを入れた項目をデータベースに書き込む
-    // TODO createTable()を通過していない
-    private fun writeToDataBase() {
-        var nums = CoordinateListAdapter.checkedList.keys
-        var helper = HaslistDatabaseHelper.getInstance(applicationContext)
-        var db = helper.openDatabase()
-        helper.use {
-            db.createTable(HaslistDatabaseHelper.tableName,ifNotExists = true,columns = *arrayOf("number" to TEXT, "has" to INTEGER))
-            for (num in nums) {
-                insert(HaslistDatabaseHelper.tableName, "number" to num, "has" to 1)
-                Log.d("writeToDataBase", "$num を 1 として書き込みました。")
-            }
-        }
     }
 }
