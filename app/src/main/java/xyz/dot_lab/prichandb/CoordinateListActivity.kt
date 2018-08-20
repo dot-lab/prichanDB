@@ -28,7 +28,7 @@ class CoordinateListActivity: AppCompatActivity() {
 
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(applicationContext,coordinateList)
+                adapter = CoordinateListAdapter(context,coordinateList)
             }
         }
 
@@ -41,7 +41,7 @@ class CoordinateListActivity: AppCompatActivity() {
 
     private fun getCoordinateList(groupName: String): List<ItemData> {
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
-        var coordinateList: List<ItemData> = mutableListOf()
+        var coordinateList: List<ItemData> = listOf()
         dbHelper.openDatabase()
         dbHelper.use {
            coordinateList = select(groupName).parseList(ItemDataParser())

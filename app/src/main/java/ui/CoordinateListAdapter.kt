@@ -8,13 +8,6 @@ import entity.ItemData
 import org.jetbrains.anko.UI
 
 class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemData>): BaseAdapter() {
-    override fun getView(potision: Int, convertView: View?, parent: ViewGroup?): View =
-            (convertView as? CoordinateListUI) ?: CoordinateListUI(context,coordinateList).apply {
-                createView(context.UI{ }).apply {
-                    update(potision)
-                }
-            }
-
 
     override fun getItem(position: Int): Any {
         return coordinateList[position]
@@ -27,5 +20,10 @@ class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemD
     override fun getCount(): Int {
         return coordinateList.size
     }
-
+    override fun getView(potision: Int, convertView: View?, parent: ViewGroup?): View =
+            (convertView as? CoordinateListUI) ?: CoordinateListUI(context,coordinateList).apply {
+                createView(context.UI{ })
+            }.apply {
+                update(potision)
+            }
 }
