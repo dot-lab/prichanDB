@@ -28,7 +28,7 @@ class CoordinateListActivity: AppCompatActivity() {
 
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(context,coordinateList)
+                adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
 
