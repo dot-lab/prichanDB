@@ -6,6 +6,7 @@ import org.jetbrains.anko.db.MapRowParser
 class ItemDataParser: MapRowParser<ItemData> {
     override fun parseRow(columns: Map<String, Any?>): ItemData {
         return ItemData(
+                columns["_id"] as Long,
                 columns["number"] as String,
                 columns["category"] as String,
                 columns["name"] as String,

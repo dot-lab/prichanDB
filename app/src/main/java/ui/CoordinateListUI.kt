@@ -12,15 +12,17 @@ import java.text.FieldPosition
 class CoordinateListUI(context: Context,coordinateList: List<ItemData>): FrameLayout(context),AnkoComponent<Context> {
     private var list = coordinateList
     private var itemName: TextView? = null
+    private var itemNum: TextView? = null
     override fun createView(ui: AnkoContext<Context>) = with(ui) {
         verticalLayout {
+            itemNum = textView {
+                textSize = 12f
+            }.lparams(wrapContent)
             itemName = textView {
                 textSize = 14f
                 height = dip(36)
             }.lparams(wrapContent)
         }.apply { this@CoordinateListUI.addView(this) }
     }
-    fun update(position: Int) {
-        itemName?.text = list[position].name
-    }
+
 }

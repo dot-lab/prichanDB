@@ -1,6 +1,7 @@
 package entity
 
-data class ItemData(var number:String,
+data class ItemData(var _id: Long,
+                    var number:String,
                     var category: String,
                     var name: String,
                     var bland: String,

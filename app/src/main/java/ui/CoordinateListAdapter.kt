@@ -14,7 +14,7 @@ class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemD
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return coordinateList[position]._id
     }
 
     override fun getCount(): Int {
@@ -24,6 +24,8 @@ class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemD
             (convertView as? CoordinateListUI) ?: CoordinateListUI(context,coordinateList).apply {
                 createView(context.UI{ })
             }.apply {
-                update(potision)
+                for (i in coordinateList){
+                    update(i._id.toInt())
+                }
             }
 }
