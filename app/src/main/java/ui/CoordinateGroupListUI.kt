@@ -10,9 +10,10 @@ class CoordinateGroupListUI(context: Context, groupNameList: MutableList<String>
     private var list = groupNameList
     override fun createView(ui: AnkoContext<Context>) = with(ui) {
         verticalLayout {
+            padding = dip(10)
             label = textView {
                 textSize = 16f
-                height = dip(36)
+                padding = dip(5)
             }.lparams(wrapContent)
         }.apply{ this@CoordinateGroupListUI.addView(this) }
     }
