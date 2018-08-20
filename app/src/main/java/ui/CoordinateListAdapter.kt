@@ -1,16 +1,15 @@
 package ui
 
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import entity.ItemData
-import kotlinx.android.synthetic.main.coordinate.view.*
 import org.jetbrains.anko.*
-import xyz.dot_lab.prichandb.R
 
-class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemData>): BaseAdapter() {
+class CoordinateListAdapter(private val coordinateList: List<ItemData>, var hasList: Map<String,Int>): BaseAdapter() {
+    // hasList => コーディネートリストとは別のDBから読み書きする
+    // number と has のペア（PCH1-01,1）ならPCH1-01を所持している,という感じ
 
     override fun getItem(position: Int): Any {
         return coordinateList[position]
@@ -32,7 +31,15 @@ class CoordinateListAdapter(var context: Context, var coordinateList: List<ItemD
                 linearLayout {
                     orientation = LinearLayout.HORIZONTAL
                     checkBox {
-
+                        // このままだとぜんぶチェックはずれる
+                        when (coordinateList[position].has.toInt()) {
+                            1 -> {
+                                isChecked = true
+                            }
+                            0 -> {
+                                isChecked = false
+                            }
+                        }
                     }.lparams(wrapContent, wrapContent)
                     textView {
                         // number
