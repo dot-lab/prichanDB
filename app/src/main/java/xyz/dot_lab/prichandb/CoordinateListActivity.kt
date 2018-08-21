@@ -2,7 +2,6 @@ package xyz.dot_lab.prichandb
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import db.CoordinateDatabaseOpenHelper
@@ -12,13 +11,14 @@ import org.jetbrains.anko.db.*
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
-
 class CoordinateListActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
-        val selectedGroupName = intent.getStringExtra("groupName")
-        val coordinateList = getCoordinateList(selectedGroupName)
+        val selectedGroupName: String = intent.getStringExtra("groupName")
+        val coordinateList: List<ItemData> = getCoordinateList(selectedGroupName)
+
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = selectedGroupName
@@ -27,7 +27,7 @@ class CoordinateListActivity : AppCompatActivity() {
         }
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(coordinateList, context)
+                adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
     }
@@ -40,7 +40,6 @@ class CoordinateListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.save -> {
-                writeToDatabase("なかよしチャンネル")
             }
         }
         finish()
@@ -56,23 +55,5 @@ class CoordinateListActivity : AppCompatActivity() {
             coordinateList = select(groupName).parseList(ItemDataParser())
         }
         return coordinateList
-    }
-
-    private fun writeToDatabase(groupName: String) {
-        val helper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
-        val hasItemsCounts = CoordinateListAdapter.checkedList.size
-        val hasItems = CoordinateListAdapter.checkedList
-        var hasItemsNumbers = mutableListOf<String>()
-        for (i in hasItems) {
-            hasItemsNumbers.add(i)
-        }
-        val database = helper.openWritableDatabase()
-        database.use {
-            val c = it.rawQuery("select number from $groupName", null)
-            if (c.moveToFirst()) {
-                Log.d("writeToDB", "$groupName" + "内の所持コーデアイテムは"+"$hasItemsCounts”+件")
-                // TODO DB書き込み
-            }
-        }
     }
 }
