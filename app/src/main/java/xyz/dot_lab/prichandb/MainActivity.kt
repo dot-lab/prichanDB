@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
         try {
             helper.createEmptyDataBase()
-            dataBase = helper.openDatabase()
+            dataBase = helper.openReadableDatabase()
         } catch (e: IOException) {
             Log.d("setDatabase()","データベースの作成に失敗しました")
             e.stackTrace

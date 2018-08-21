@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
-import db.HasItemDatabaseHelper
 import entity.ItemData
 import org.jetbrains.anko.*
 import xyz.dot_lab.prichandb.R
@@ -58,6 +57,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                                 Log.d("checkedList", checkedList.toString())
                             }
                         })
+                        isChecked = coordinateList[position].has.toInt() == 1
                     }.lparams(wrapContent, matchParent)
                     textView {
                         // number

@@ -97,7 +97,10 @@ class CoordinateDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(co
         iStrm.close()
     }
 
-    fun openDatabase(): SQLiteDatabase {
+    fun openReadableDatabase(): SQLiteDatabase {
         return readableDatabase
+    }
+    fun openWritableDatabase(): SQLiteDatabase {
+        return writableDatabase
     }
 }
