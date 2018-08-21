@@ -38,8 +38,11 @@ class CoordinateListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // 保存ボタン
         when (item?.itemId) {
             R.id.save -> {
+                // プリファレンスに書き込む
+
             }
         }
         finish()
