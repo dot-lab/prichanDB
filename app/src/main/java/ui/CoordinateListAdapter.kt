@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import entity.ItemData
 import org.jetbrains.anko.*
+import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
@@ -62,19 +63,19 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     textView { // reality
                         when (coordinateList[position].reality.toInt()) {
                             1 -> {
-                                text = "N"
+                                text = R.string.n.toString()
                             }
                             2 -> {
-                                text = "R"
+                                text = R.string.r.toString()
                             }
                             3 -> {
-                                text = "SR"
+                                text = R.string.sr.toString()
                             }
                             4 -> {
-                                text = "PR"
+                                text = R.string.pr.toString()
                             }
                             5 -> {
-                                text = "KR"
+                                text = R.string.kr.toString()
                             }
                         }
                         padding = dip(5)
@@ -82,34 +83,34 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     }.lparams(wrapContent, matchParent)
                     imageView { // bland
                         when (coordinateList[position].bland) {
-                            "Sweet Honey" -> {
+                            R.string.sh.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-sweethoney.png"))
                             }
-                            "Girl's Yell" -> {
+                            R.string.gy.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-girlsyell.png"))
                             }
-                            "Secret Alice" -> {
+                            R.string.sa.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-secretalice.png"))
                             }
-                            "Dolly Waltz" -> {
+                            R.string.dw.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-dollywaltz.png"))
                             }
-                            "Romance Beat" -> {
+                            R.string.rb.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-romancebeat.png"))
                             }
-                            "Prism Stone" -> {
+                            R.string.ps.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo_prismstone.png"))
                             }
-                            "Twinkle Ribbon" -> {
+                            R.string.tr.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-twinkleribbon.png"))
                             }
-                            "Love Devi" -> {
+                            R.string.ld.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-lovedevi.png"))
                             }
-                            "Baby Monster" -> {
+                            R.string.bm.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-babymonster.png"))
                             }
-                            "Brilliant Prince" -> {
+                            R.string.bp.toString() -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-brilliantprince.png"))
                             }
                             else -> {
