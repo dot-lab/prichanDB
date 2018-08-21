@@ -35,6 +35,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
 
     override fun getView(position: Int, v: View?, parent: ViewGroup?): View {
         // listView の1行分のレイアウトを定義
+        // ここは別ファイルにわけたい
         return with(parent!!.context) {
             linearLayout { // Wrapper
                 orientation = LinearLayout.VERTICAL
@@ -83,34 +84,34 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     }.lparams(wrapContent, matchParent)
                     imageView { // bland
                         when (coordinateList[position].bland) {
-                            R.string.sh.toString() -> {
+                            getString(R.string.sh) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-sweethoney.png"))
                             }
-                            R.string.gy.toString() -> {
+                            getString(R.string.gy) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-girlsyell.png"))
                             }
-                            R.string.sa.toString() -> {
+                            getString(R.string.sa) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-secretalice.png"))
                             }
-                            R.string.dw.toString() -> {
+                            getString(R.string.dw) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-dollywaltz.png"))
                             }
-                            R.string.rb.toString() -> {
+                            getString(R.string.rb) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-romancebeat.png"))
                             }
-                            R.string.ps.toString() -> {
+                            getString(R.string.ps) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo_prismstone.png"))
                             }
-                            R.string.tr.toString() -> {
+                            getString(R.string.tr) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-twinkleribbon.png"))
                             }
-                            R.string.ld.toString() -> {
+                            getString(R.string.ld) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-lovedevi.png"))
                             }
-                            R.string.bm.toString() -> {
+                            getString(R.string.bm) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-babymonster.png"))
                             }
-                            R.string.bp.toString() -> {
+                            getString(R.string.bp) -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-brilliantprince.png"))
                             }
                             else -> {
@@ -143,7 +144,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     textView { // iine
                         padding = dip(5)
                         gravity = Gravity.LEFT
-                        text = """${coordinateList[position].iine}${R.string.iine}"""
+                        text = "${coordinateList[position].iine}${getString(R.string.iine)}"
                     }.lparams(dip(100), wrapContent)
                     textView { // color
                         padding = dip(5)
