@@ -15,6 +15,10 @@ import java.io.IOException
 import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
+    companion object {
+        // チェックがはいったコーデアイテムのnumberを記録
+        var checkedSet: Set<String> = mutableSetOf()
+    }
 
     override fun getItem(position: Int): Any {
         return coordinateList[position]
@@ -41,7 +45,13 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     checkBox { // has
                         gravity = Gravity.CENTER
                         setOnClickListener {
-                            Log.d("onClick","$position isChecked = $isChecked" )
+                            //                            Log.d("onClick","$position isChecked = $isChecked" )
+                            if (isChecked) {
+                                checkedSet += coordinateList[position].number
+                            } else {
+                                checkedSet -= coordinateList[position].number
+                            }
+                            Log.d("onClick","$checkedSet")
                         }
                     }.lparams(wrapContent, matchParent)
                     textView { // number
