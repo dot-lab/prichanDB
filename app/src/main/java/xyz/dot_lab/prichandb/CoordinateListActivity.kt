@@ -1,6 +1,8 @@
 package xyz.dot_lab.prichandb
 
 import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -33,20 +35,20 @@ class CoordinateListActivity: AppCompatActivity() {
                 adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
-        val helper = HasItemDatabaseHelper(applicationContext,db.HasItemDatabaseHelper.DB_NAME,null,db.HasItemDatabaseHelper.DB_VERSION)
-        helper.checkFromDatabase("DW-01")
+        val helper = HasItemDatabaseHelper(applicationContext)
+        val db = helper.readableDatabase
+//        val c: Cursor =
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actionmenu,menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val helper = HasItemDatabaseHelper(applicationContext,db.HasItemDatabaseHelper.DB_NAME,null,db.HasItemDatabaseHelper.DB_VERSION)
+        val helper = HasItemDatabaseHelper(applicationContext)
         when (item?.itemId) {
             R.id.save -> {
-                helper.writeToDatabase()
+
             }
         }
         finish()

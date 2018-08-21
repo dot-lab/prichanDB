@@ -12,17 +12,19 @@ import java.util.List;
 import ui.CoordinateListAdapter;
 
 public class HasItemDatabaseHelper extends SQLiteOpenHelper {
-    private static final String TABLE_NAME = "hasItem";
-    public static final String DB_NAME = "hasItems3.db";
-    public static int DB_VERSION = 3;
-    public HasItemDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private static final String TABLE_NAME = "hasItems";
+    private static final String DB_NAME = "hasItems.db";
+    private static final int DB_VERSION = 3;
+//    public HasItemDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+//        super(context, name, factory, version);
+//    }
+    public HasItemDatabaseHelper(Context context) {
+        super(context,DB_NAME,null,DB_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(
-                "create table " + TABLE_NAME
-                + " (number TEXT, has INTEGER)"
+                "create table "+TABLE_NAME+" (number TEXT, has INTEGER)"
         );
         Log.d("onCreate","通過！");
     }
