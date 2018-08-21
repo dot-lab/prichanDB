@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="Wrapper" type="id"/>
+    <item name="Inner1" type="id"/>
+    <item name="Inner2" type="id" />
+    <item name="Inner3" type="id" />
+    <item name="ItemNumber" type="id" />
+    <item name="ItemCategory" type="id" />
+    <item name="ItemName" type="id" />
+    <item name="ItemBland" type="id" />
+    <item name="ItemReality" type="id" />
+    <item name="ItemColor" type="id" />
+    <item name="ItemType" type="id" />
+    <item name="ItemIine" type="id" />
+    <item name="ItemHas" type="id" />
+</resources>

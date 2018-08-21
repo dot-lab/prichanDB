@@ -8,18 +8,14 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.CheckBox
 import android.widget.LinearLayout
 import entity.ItemData
 import org.jetbrains.anko.*
-import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
-    companion object {
-        var checkedMap = mapOf("one" to 1)
-    }
+
     override fun getItem(position: Int): Any {
         return coordinateList[position]
     }
@@ -35,33 +31,25 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
     override fun getView(position: Int, v: View?, parent: ViewGroup?): View {
         // listView の1行分のレイアウトを定義
         return with(parent!!.context) {
-            linearLayout {
-                // wrapper
-                id = R.id.wrapper
+            linearLayout { // Wrapper
                 orientation = LinearLayout.VERTICAL
                 padding = dip(10)
                 lparams(matchParent, wrapContent)
-                linearLayout {
-                    // number has reality
-                    id = R.id.inner4
+                linearLayout { // Container : has,number,realty,bland,type
                     orientation = LinearLayout.HORIZONTAL
                     lparams(wrapContent, matchParent)
-                    checkBox {
+                    checkBox { // has
                         gravity = Gravity.CENTER
                         setOnClickListener {
                             Log.d("onClick","$position isChecked = $isChecked" )
                         }
                     }.lparams(wrapContent, matchParent)
-                    textView {
-                        // number
-                        id = R.id.number
+                    textView { // number
                         text = coordinateList[position].number
                         padding = dip(5)
                         gravity = Gravity.CENTER
                     }.lparams(wrapContent, matchParent)
-                    textView {
-                        // reality
-                        id = R.id.name
+                    textView { // reality
                         when (coordinateList[position].reality.toInt()) {
                             1 -> {
                                 text = "N"
@@ -82,8 +70,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                         padding = dip(5)
                         gravity = Gravity.CENTER
                     }.lparams(wrapContent, matchParent)
-                    imageView {
-                        // blandLogo
+                    imageView { // bland
                         when (coordinateList[position].bland) {
                             "Sweet Honey" -> {
                                 setImageBitmap(getResourceFromAssets("blandLogos/logo-sweethoney.png"))
@@ -120,48 +107,34 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                             }
                         }
                     }.lparams(dip(100),dip(30))
-                    textView {
-                        // type
-                        id = R.id.type
+                    textView { // type
                         padding = dip(5)
                         gravity = Gravity.LEFT
                         text = coordinateList[position].type
                     }.lparams(dip(100), wrapContent)
                 }
-                linearLayout {
-                    // inner1 name
-                    id = R.id.inner
+                linearLayout { // contains: name
                     padding = dip(10)
                     orientation = LinearLayout.HORIZONTAL
-                    textView {
-                        // name
-                        id = R.id.name
+                    textView { // name
                         text = coordinateList[position].name
                         padding = dip(5)
                         textSize = 16f
                         gravity = Gravity.LEFT
                     }.lparams(wrapContent, matchParent)
                 }.lparams(matchParent, wrapContent)
-                linearLayout {
-                    // inner3
-                    id = R.id.inner3
-                    textView {
-                        // category
-                        id = R.id.category
+                linearLayout { // contains : category,iine,color
+                    textView { // category
                         padding = dip(5)
                         gravity = Gravity.LEFT
                         text = coordinateList[position].category
                     }.lparams(dip(100), wrapContent)
-                    textView {
-                        // iine
-                        id = R.id.iine
+                    textView { // iine
                         padding = dip(5)
                         gravity = Gravity.LEFT
                         text = coordinateList[position].iine.toString() + "いいね★"
                     }.lparams(dip(100), wrapContent)
-                    textView {
-                        // color
-                        id = R.id.color
+                    textView { // color
                         padding = dip(5)
                         gravity = Gravity.LEFT
                         text = coordinateList[position].color
