@@ -13,9 +13,10 @@ import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
 
-class CoordinateListActivity: AppCompatActivity() {
+class CoordinateListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val intent = intent
         val selectedGroupName = intent.getStringExtra("groupName")
         val coordinateList = getCoordinateList(selectedGroupName)
         val actionBar = supportActionBar
@@ -26,46 +27,52 @@ class CoordinateListActivity: AppCompatActivity() {
         }
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(coordinateList,context)
+                adapter = CoordinateListAdapter(coordinateList, context)
             }
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.actionmenu,menu)
+        menuInflater.inflate(R.menu.actionmenu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val hasItemCounts = CoordinateListAdapter.checkedList.size
-        val hasItems = CoordinateListAdapter.checkedList
-        var hasItemNumber = mutableListOf<String>()
-        for (i in hasItems) {
-            hasItemNumber.add(i)
-        }
-        val helper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
         when (item?.itemId) {
             R.id.save -> {
-                Log.d("save","チェックされた数：$hasItemCounts,チェックされたアイテムの番号：$hasItemNumber")
-//                val db = helper.openWritableDatabase()
-////                db.use {
-////                    val c = it.rawQuery("select * from $selectedGroupName where numbers like $hasItemNumbers",null)
-////                    if (c.moveToFirst()) {
-////                        Log.d("optionItemSelected","条件に一致：${c.count}}件")
-////                    }
-////                }
+                writeToDatabase("なかよしチャンネル")
             }
         }
         finish()
         return super.onOptionsItemSelected(item)
     }
+
     // コーデアイテムのリストを取得
     private fun getCoordinateList(groupName: String): List<ItemData> {
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
         var coordinateList: List<ItemData> = listOf()
         dbHelper.openReadableDatabase()
         dbHelper.use {
-           coordinateList = select(groupName).parseList(ItemDataParser())
+            coordinateList = select(groupName).parseList(ItemDataParser())
         }
         return coordinateList
+    }
+
+    private fun writeToDatabase(groupName: String) {
+        val helper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
+        val hasItemsCounts = CoordinateListAdapter.checkedList.size
+        val hasItems = CoordinateListAdapter.checkedList
+        var hasItemsNumbers = mutableListOf<String>()
+        for (i in hasItems) {
+            hasItemsNumbers.add(i)
+        }
+        val database = helper.openWritableDatabase()
+        database.use {
+            val c = it.rawQuery("select number from $groupName", null)
+            if (c.moveToFirst()) {
+                Log.d("writeToDB", "$groupName" + "内の所持コーデアイテムは"+"$hasItemsCounts”+件")
+                // TODO DB書き込み
+            }
+        }
     }
 }
