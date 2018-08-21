@@ -143,7 +143,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     textView { // iine
                         padding = dip(5)
                         gravity = Gravity.LEFT
-                        text = coordinateList[position].iine.toString() + "いいね★"
+                        text = """${coordinateList[position].iine}${R.string.iine}"""
                     }.lparams(dip(100), wrapContent)
                     textView { // color
                         padding = dip(5)
@@ -156,12 +156,12 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
     }
     // 引数でAssets内の画像パスを指定して,Bitmapで返す
     private fun getResourceFromAssets(path: String): Bitmap {
-        var iStrm: InputStream = context.assets.open(path)
+        val iStrm: InputStream = context.assets.open(path)
         return try {
             BitmapFactory.decodeStream(iStrm)
         } catch (e: IOException) {
             e.stackTrace
-            var iStrmNone: InputStream = context.assets.open("blandLogos/none.png")
+            val iStrmNone: InputStream = context.assets.open("blandLogos/none.png")
             BitmapFactory.decodeStream(iStrmNone)
         } finally {
              iStrm.close()
