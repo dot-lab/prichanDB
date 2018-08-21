@@ -64,19 +64,19 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     textView { // reality
                         when (coordinateList[position].reality.toInt()) {
                             1 -> {
-                                text = R.string.n.toString()
+                                text = getString(R.string.n)
                             }
                             2 -> {
-                                text = R.string.r.toString()
+                                text = getString(R.string.r)
                             }
                             3 -> {
-                                text = R.string.sr.toString()
+                                text = getString(R.string.sr)
                             }
                             4 -> {
-                                text = R.string.pr.toString()
+                                text = getString(R.string.pr)
                             }
                             5 -> {
-                                text = R.string.kr.toString()
+                                text = getString(R.string.kr)
                             }
                         }
                         padding = dip(5)
