@@ -1,25 +1,24 @@
 package ui
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.CheckBox
 import android.widget.LinearLayout
-import db.CoordinateDatabaseOpenHelper
 import entity.ItemData
 import org.jetbrains.anko.*
-import org.jetbrains.anko.db.update
 import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
     companion object {
-        var checkedList: List<String> = mutableListOf()
+        var checkedMap = mapOf("one" to 1)
     }
     override fun getItem(position: Int): Any {
         return coordinateList[position]
@@ -48,18 +47,10 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     orientation = LinearLayout.HORIZONTAL
                     lparams(wrapContent, matchParent)
                     checkBox {
-                        id = R.id.has
                         gravity = Gravity.CENTER
-                        isChecked = coordinateList[position].has.toInt() == 1
-                        setOnClickListener(View.OnClickListener {
-                            if (isChecked) {
-                                checkedList += coordinateList[position].number
-                                coordinateList[position].has = 1
-                            } else {
-                                checkedList -= coordinateList[position].number
-                                coordinateList[position].has = 0
-                            }
-                        })
+                        setOnClickListener {
+                            Log.d("onClick","$position isChecked = $isChecked" )
+                        }
                     }.lparams(wrapContent, matchParent)
                     textView {
                         // number
