@@ -1,11 +1,8 @@
 package ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -165,7 +162,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
             val iStrmNone: InputStream = context.assets.open("blandLogos/none.png")
             BitmapFactory.decodeStream(iStrmNone)
         } finally {
-             iStrm.close()
+            iStrm.close()
         }
     }
     // 引数で渡すNumberがプリファレンスに保存済みかどうか＝持っているかどうか
