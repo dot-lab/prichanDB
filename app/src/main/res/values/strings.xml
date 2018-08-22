@@ -17,4 +17,5 @@
     <string name="ld">Love Devi</string>
     <string name="bm">Baby Monster</string>
     <string name="bp">Brilliant Prince</string>
+    <string name="prefKey">itemNumber</string>
 </resources>

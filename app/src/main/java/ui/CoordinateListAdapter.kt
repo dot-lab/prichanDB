@@ -1,8 +1,10 @@
 package ui
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -15,10 +17,10 @@ import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
+class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context, private val checked: MutableSet<String>): BaseAdapter() {
     companion object {
-        // チェックがはいったコーデアイテムのnumberを記録
-        var checkedSet: Set<String> = mutableSetOf()
+        // チェックボックスの値が変更されたかどうか
+        var changedFlag: Boolean = false
     }
 
     override fun getItem(position: Int): Any {
@@ -35,7 +37,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
 
     override fun getView(position: Int, v: View?, parent: ViewGroup?): View {
         // listView の1行分のレイアウトを定義
-        // ここは別ファイルにわけたい
+        // できればここは別ファイルにわけたい
         return with(parent!!.context) {
             linearLayout { // Wrapper
                 orientation = LinearLayout.VERTICAL
@@ -46,14 +48,12 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     lparams(wrapContent, matchParent)
                     checkBox { // has
                         gravity = Gravity.CENTER
+                        isChecked = alreadyHasItem(coordinateList[position].number)
+                        // すでにチェックされている場合は変更できなくする
+                        if(isChecked) isEnabled = false
                         setOnClickListener {
-                            //                            Log.d("onClick","$position isChecked = $isChecked" )
-                            if (isChecked) {
-                                checkedSet += coordinateList[position].number
-                            } else {
-                                checkedSet -= coordinateList[position].number
-                            }
-                            Log.d("onClick","$checkedSet")
+                            changedFlag = true
+                            // TODO チェックされたとき
                         }
                     }.lparams(wrapContent, matchParent)
                     textView { // number
@@ -168,4 +168,11 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
              iStrm.close()
         }
     }
+    // 引数で渡すNumberがプリファレンスに保存済みかどうか＝持っているかどうか
+    // 持っていたらそのNumberを返す
+    private fun alreadyHasItem(itemNumber: String): Boolean {
+        if (checked.contains(itemNumber)) return true
+        return false
+    }
+
 }
