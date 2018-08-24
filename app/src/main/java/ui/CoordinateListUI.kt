@@ -32,6 +32,10 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set
     private var iineTextView: TextView? = null
     private var colorTextView: TextView? = null
 
+    companion object {
+        var changedFlag = false
+    }
+
     init {
         context.UI {
             verticalLayout {
@@ -93,6 +97,7 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set
         hasCheckBox?.setOnCheckedChangeListener {
             compoundButton: CompoundButton, b: Boolean ->
             if(hasCheckBox?.isChecked!!){
+                changedFlag = true
                 CoordinateListActivity.checkedSet.add(list[pos].number)
             } else {
                 CoordinateListActivity.checkedSet.remove(list[pos].number)

@@ -16,6 +16,7 @@ import entity.ItemData
 import org.jetbrains.anko.db.*
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
+import ui.ConfirmDialog
 import ui.CoordinateListAdapter
 import ui.CoordinateListUI
 
@@ -55,12 +56,25 @@ class CoordinateListActivity : AppCompatActivity() {
         // 保存ボタン
         when (item?.itemId) {
             R.id.save -> {
-                saveToPreference(checkedSet)
-                Toast.makeText(applicationContext,"入手コーデ情報を保存しました",Toast.LENGTH_SHORT).show()
-                finish()
+                if(CoordinateListUI.changedFlag) {
+                    saveToPreference(checkedSet)
+                    Toast.makeText(applicationContext, "入手コーデ情報を保存しました", Toast.LENGTH_SHORT).show()
+                    CoordinateListUI.changedFlag = false
+                    finish()
+                } else {
+                    Toast.makeText(applicationContext, "入手したコーデを選択してください", Toast.LENGTH_SHORT).show()
+                }
             }
             android.R.id.home -> {
-                // TODO 戻るボタン
+//                if(CoordinateListUI.changedFlag) {
+//                    var dialog = ConfirmDialog()
+//                    dialog.onClickListener = DialogInterface.OnClickListener{
+//                        dialogInterface: DialogInterface, i: Int ->
+//                        Toast.makeText(applicationContext,"メインメニューへ戻ります",Toast.LENGTH_SHORT).show()
+//                    }
+//                    dialog.show(supportFragmentManager,"confirm")
+//                    CoordinateListUI.changedFlag = false
+//                }
                 finish()
             }
         }
