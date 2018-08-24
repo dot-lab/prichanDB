@@ -1,5 +1,6 @@
 package xyz.dot_lab.prichandb
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.preference.DialogPreference
@@ -19,7 +20,6 @@ import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
 class CoordinateListActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
@@ -33,18 +33,9 @@ class CoordinateListActivity : AppCompatActivity() {
 
         }
 
-        // プリファレンスからひっぱる
-        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        var checkedSet =  pref.getStringSet(getString(R.string.prefKey), mutableSetOf())
-
-        // デバッグ用 セットの中身一覧
-        for (i in checkedSet) {
-            Log.d("checkedSet",i)
-        }
-
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(coordinateList,context,checkedSet)
+                adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
 
@@ -61,12 +52,9 @@ class CoordinateListActivity : AppCompatActivity() {
             R.id.save -> {
                 // changedFlagが立っていれば
                 if (CoordinateListAdapter.changedFlag) {
-                    // TODO プリファレンスに書き込む
-//                    defaultSharedPreferences.edit()
-//                            .putStringSet(getString(R.string.prefKey), CoordinateListAdapter.checkedSet)
-//                            .apply()
+                    // TODO 保存
+                    Toast.makeText(applicationContext, "所持コーデ情報を更新しました", Toast.LENGTH_SHORT).show()
                     // 書き込んだらflagはfalseに戻す
-                    Toast.makeText(applicationContext, "所持コーデ情報を保存しました", Toast.LENGTH_SHORT).show()
                     CoordinateListAdapter.changedFlag = false
                     finish()
                     return true
@@ -76,20 +64,9 @@ class CoordinateListActivity : AppCompatActivity() {
             }
             android.R.id.home -> {
                 if(CoordinateListAdapter.changedFlag) {
-                    AlertDialog.Builder(this).apply {
-                            setTitle("確認")
-                            setMessage("変更があります。保存せずに戻りますか？")
-                            setPositiveButton("保存しないでメインメニューに戻る",DialogInterface.OnClickListener{
-                                _: DialogInterface, i: Int ->
-                                // TODO メモリリーク起こってるので対処
-                                Toast.makeText(applicationContext,"メインメニューに戻ります",Toast.LENGTH_SHORT).show()
-                                CoordinateListAdapter.changedFlag = false
-                                finish()
-                            })
-                            setNegativeButton("キャンセル",null)
-                            show()
-                    }
+                    // TODO ダイアログ表示（保存してないけどいいの？）
                 }
+                CoordinateListAdapter.changedFlag = false
                 finish()
             }
         }
@@ -106,4 +83,12 @@ class CoordinateListActivity : AppCompatActivity() {
         }
         return coordinateList
     }
+//    private fun saveToPreference(prefSet: MutableSet<String>,checked: MutableSet<String>): MutableSet<String> {
+//        PreferenceManager.getDefaultSharedPreferences(applicationContext).edit().putStringSet(
+//                getString(R.string.prefKey),checked
+//        ).apply()
+//        prefSet.plus(checked)
+//        Log.d("saveToPref","$prefSet")
+//        return prefSet
+//    }
 }

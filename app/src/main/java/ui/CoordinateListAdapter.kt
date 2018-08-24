@@ -13,11 +13,12 @@ import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import entity.ItemData
 import org.jetbrains.anko.*
+import xyz.dot_lab.prichandb.CoordinateListActivity
 import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context, private val checked: MutableSet<String>): BaseAdapter() {
+class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
     companion object {
         // チェックボックスの値が変更されたかどうか
         var changedFlag: Boolean = false
@@ -48,12 +49,13 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     lparams(wrapContent, matchParent)
                     checkBox { // has
                         gravity = Gravity.CENTER
-                        isChecked = alreadyHasItem(coordinateList[position].number)
-                        // すでにチェックされている場合は変更できなくする
+                        // すでに持っている場合は最初からチェックされている
+                        // isChecked = alreadyHasItem(coordinateList[position].number)
+                        // すでにチェックされている場合は無効化
                         if(isChecked) isEnabled = false
                         setOnClickListener {
                             changedFlag = true
-                            // TODO チェックされたとき
+                            // TODO チェック入れたとき
                         }
                     }.lparams(wrapContent, matchParent)
                     textView { // number
@@ -168,11 +170,9 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
              iStrm.close()
         }
     }
-    // 引数で渡すNumberがプリファレンスに保存済みかどうか＝持っているかどうか
-    // 持っていたらそのNumberを返す
-    private fun alreadyHasItem(itemNumber: String): Boolean {
-        if (checked.contains(itemNumber)) return true
-        return false
-    }
-
+//    // 引数で渡すNumberがプリファレンスに保存済みかどうか＝持っているかどうか
+//    private fun alreadyHasItem(itemNumber: String): Boolean {
+//        if (hasItem.contains(itemNumber)) return true
+//        return false
+//    }
 }
