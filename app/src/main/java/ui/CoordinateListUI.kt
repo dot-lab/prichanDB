@@ -3,6 +3,7 @@ package ui
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -10,12 +11,14 @@ import entity.ItemData
 import kotlinx.android.synthetic.main.coordinate.view.*
 import org.jetbrains.anko.*
 import org.w3c.dom.Text
+import xyz.dot_lab.prichandb.CoordinateListActivity
 import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(context) {
+class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set<String>): FrameLayout(context) {
     private val list = itemList
+    private val itemSet = hasItems
     private var containerLayout1: LinearLayout? = null
     private var containerLayout2: LinearLayout? = null
     private var containerLayout3: LinearLayout? = null
@@ -87,6 +90,17 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(
 
     fun update(pos: Int) {
         numberTextView?.text = list[pos].number
+        hasCheckBox?.setOnCheckedChangeListener {
+            compoundButton: CompoundButton, b: Boolean ->
+            if(hasCheckBox?.isChecked!!){
+                CoordinateListActivity.checkedSet.add(list[pos].number)
+            } else {
+                CoordinateListActivity.checkedSet.remove(list[pos].number)
+            }
+        }
+        hasCheckBox?.isChecked = itemSet.contains(list[pos].number)
+        hasCheckBox?.isEnabled = !itemSet.contains(list[pos].number)
+
         realityTextView?.text = when(list[pos].reality.toInt()) {
             1 -> context.getString(R.string.n)
             2 -> context.getString(R.string.r)
@@ -128,5 +142,4 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(
             iStrm.close()
         }
     }
-
 }

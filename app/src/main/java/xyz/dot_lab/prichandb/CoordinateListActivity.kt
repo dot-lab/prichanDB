@@ -14,12 +14,15 @@ import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.db.*
-import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
-class CoordinateListActivity : AppCompatActivity() {
+import ui.CoordinateListUI
 
+class CoordinateListActivity : AppCompatActivity() {
+    companion object {
+        var checkedSet = mutableSetOf<String>()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
@@ -33,9 +36,11 @@ class CoordinateListActivity : AppCompatActivity() {
 
         }
 
+        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(context,coordinateList)
+                adapter = CoordinateListAdapter(context,coordinateList,pref.getStringSet(getString(R.string.prefKey), setOf()))
             }
         }
 
@@ -50,7 +55,9 @@ class CoordinateListActivity : AppCompatActivity() {
         // 保存ボタン
         when (item?.itemId) {
             R.id.save -> {
-                // TODO 保存ボタン
+                saveToPreference(checkedSet)
+                Toast.makeText(applicationContext,"入手コーデ情報を保存しました",Toast.LENGTH_SHORT).show()
+                finish()
             }
             android.R.id.home -> {
                 // TODO 戻るボタン
@@ -69,5 +76,12 @@ class CoordinateListActivity : AppCompatActivity() {
             coordinateList = select(groupName).parseList(ItemDataParser())
         }
         return coordinateList
+    }
+    private fun saveToPreference(checkedItems: MutableSet<String>) {
+        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        var hasItems = pref.getStringSet(getString(R.string.prefKey), mutableSetOf()) + checkedItems
+        pref.edit()
+                .putStringSet(getString(R.string.prefKey),hasItems)
+                .apply()
     }
 }
