@@ -1,9 +1,11 @@
 package ui
 
 import android.content.Context
+import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.floatingActionButton
 
 class CoordinateGroupListUI(context: Context, groupNameList: MutableList<String>): FrameLayout(context), AnkoComponent<Context> {
     private var label: TextView? = null

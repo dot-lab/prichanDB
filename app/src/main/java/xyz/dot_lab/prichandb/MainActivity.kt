@@ -7,11 +7,14 @@ import android.database.sqlite.SQLiteException
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import db.CoordinateDatabaseOpenHelper
-import org.jetbrains.anko.listView
-import org.jetbrains.anko.verticalLayout
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.floatingActionButton
+import org.jetbrains.anko.design.snackbar
 import ui.CoordinateGroupListAdapter
 import java.io.IOException
 
@@ -21,22 +24,33 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val groupNameList = getGroupNameList()
         var intent = Intent(applicationContext,CoordinateListActivity::class.java)
 
-        verticalLayout {
+        frameLayout {
             listView {
-                adapter = CoordinateGroupListAdapter(context,groupNameList)
-            }.onItemClickListener = AdapterView.OnItemClickListener {
-                adapterView: AdapterView<*>, view1: View, position: Int, id: Long ->
-                // タップしたグループ名を取得
-                var groupName =  adapterView.getItemAtPosition(position).toString()
-                // インテントでアクティビティを変更
-                intent.putExtra("groupName",groupName)
-                startActivity(intent)
+                adapter = CoordinateGroupListAdapter(context, groupNameList)
+                onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, position: Int, id: Long ->
+                    // タップしたグループ名を取得
+                    var groupName = adapterView.getItemAtPosition(position).toString()
+                    // インテントでアクティビティを変更
+                    intent.putExtra("groupName", groupName)
+                    startActivity(intent)
+                }
+            }
+            floatingActionButton {
+                imageResource = android.R.drawable.ic_menu_search
+                size = dip(24)
+            }.lparams {
+                wrapContent
+                margin = dip(10)
+                marginEnd = dip(16)
+                gravity = Gravity.BOTTOM or Gravity.END
+            }.setOnClickListener {
+                toast("fab")
             }
         }
+
     }
     // データベースを呼び出す
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {
