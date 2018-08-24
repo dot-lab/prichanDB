@@ -14,7 +14,7 @@ import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(context), AnkoComponent<Context> {
+class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(context) {
     private val list = itemList
     private var containerLayout1: LinearLayout? = null
     private var containerLayout2: LinearLayout? = null
@@ -29,57 +29,59 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(
     private var iineTextView: TextView? = null
     private var colorTextView: TextView? = null
 
-    override fun createView(ui: AnkoContext<Context>) = with(ui) {
-        verticalLayout {
-            orientation = LinearLayout.VERTICAL
-            padding = dip(10)
-            lparams(matchParent, wrapContent)
-            containerLayout1 = linearLayout {
-                orientation = LinearLayout.HORIZONTAL
-                lparams(wrapContent, matchParent)
-                hasCheckBox = checkBox {
-                    gravity = Gravity.CENTER
-                }.lparams(wrapContent, matchParent)
-                numberTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.CENTER
-                }.lparams(wrapContent, matchParent)
-                realityTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.CENTER
-                }.lparams(wrapContent, matchParent)
-                blandImageView = imageView {
-                }.lparams(dip(100),dip(30))
-                typeTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.LEFT
-                }.lparams(dip(100), wrapContent)
-            }
-            containerLayout2 = linearLayout {
+    init {
+        context.UI {
+            verticalLayout {
+                orientation = LinearLayout.VERTICAL
                 padding = dip(10)
-                orientation = LinearLayout.HORIZONTAL
-                nameTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.LEFT
-                    textSize = 16f
+                lparams(matchParent, wrapContent)
+                containerLayout1 = linearLayout {
+                    orientation = LinearLayout.HORIZONTAL
+                    lparams(wrapContent, matchParent)
+                    hasCheckBox = checkBox {
+                        gravity = Gravity.CENTER
+                    }.lparams(wrapContent, matchParent)
+                    numberTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.CENTER
+                    }.lparams(wrapContent, matchParent)
+                    realityTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.CENTER
+                    }.lparams(wrapContent, matchParent)
+                    blandImageView = imageView {
+                    }.lparams(dip(100), dip(30))
+                    typeTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.LEFT
+                    }.lparams(dip(100), wrapContent)
+                }
+                containerLayout2 = linearLayout {
+                    padding = dip(10)
+                    orientation = LinearLayout.HORIZONTAL
+                    nameTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.LEFT
+                        textSize = 16f
+                    }.lparams(wrapContent, matchParent)
+                }.lparams(matchParent, wrapContent)
+                containerLayout3 = linearLayout {
+                    categoryTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.LEFT
+                    }.lparams(dip(100), wrapContent)
+                    iineTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.LEFT
+                    }.lparams(dip(100), wrapContent)
+                    colorTextView = textView {
+                        padding = dip(5)
+                        gravity = Gravity.LEFT
+                    }.lparams(dip(100), wrapContent)
                 }.lparams(wrapContent, matchParent)
-            }.lparams(matchParent, wrapContent)
-            containerLayout3 = linearLayout {
-                categoryTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.LEFT
-                }.lparams(dip(100), wrapContent)
-                iineTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.LEFT
-                }.lparams(dip(100), wrapContent)
-                colorTextView = textView {
-                    padding = dip(5)
-                    gravity = Gravity.LEFT
-                }.lparams(dip(100), wrapContent)
-            }.lparams(wrapContent, matchParent)
-        }.apply {
-            this@CoordinateListUI.addView(this)
+            }.apply {
+                this@CoordinateListUI.addView(this)
+            }
         }
     }
 
