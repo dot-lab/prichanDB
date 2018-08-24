@@ -1,10 +1,8 @@
 package ui
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -20,8 +18,8 @@ import java.io.InputStream
 
 class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context): BaseAdapter() {
     companion object {
-        // チェックボックスの値が変更されたかどうか
-        var changedFlag: Boolean = false
+        // チェックがはいったコーデアイテムのnumberを記録
+        var checkedSet: Set<String> = mutableSetOf()
     }
 
     override fun getItem(position: Int): Any {
@@ -38,7 +36,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
 
     override fun getView(position: Int, v: View?, parent: ViewGroup?): View {
         // listView の1行分のレイアウトを定義
-        // できればここは別ファイルにわけたい
+        // ここは別ファイルにわけたい
         return with(parent!!.context) {
             linearLayout { // Wrapper
                 orientation = LinearLayout.VERTICAL
@@ -49,6 +47,7 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                     lparams(wrapContent, matchParent)
                     checkBox { // has
                         gravity = Gravity.CENTER
+<<<<<<< HEAD
                         // すでに持っている場合は最初からチェックされている
                         // isChecked = alreadyHasItem(coordinateList[position].number)
                         // すでにチェックされている場合は無効化
@@ -56,6 +55,16 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
                         setOnClickListener {
                             changedFlag = true
                             // TODO チェック入れたとき
+=======
+                        setOnClickListener {
+                            //                            Log.d("onClick","$position isChecked = $isChecked" )
+                            if (isChecked) {
+                                checkedSet += coordinateList[position].number
+                            } else {
+                                checkedSet -= coordinateList[position].number
+                            }
+                            Log.d("onClick","$checkedSet")
+>>>>>>> parent of 99e37a8... なんかいろいろ進んだ
                         }
                     }.lparams(wrapContent, matchParent)
                     textView { // number
@@ -170,9 +179,12 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
              iStrm.close()
         }
     }
+<<<<<<< HEAD
 //    // 引数で渡すNumberがプリファレンスに保存済みかどうか＝持っているかどうか
 //    private fun alreadyHasItem(itemNumber: String): Boolean {
 //        if (hasItem.contains(itemNumber)) return true
 //        return false
 //    }
+=======
+>>>>>>> parent of 99e37a8... なんかいろいろ進んだ
 }

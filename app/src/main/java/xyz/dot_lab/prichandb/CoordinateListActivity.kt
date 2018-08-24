@@ -1,21 +1,18 @@
 package xyz.dot_lab.prichandb
 
+<<<<<<< HEAD
 import android.app.Dialog
 import android.content.DialogInterface
+=======
+>>>>>>> parent of 99e37a8... なんかいろいろ進んだ
 import android.os.Bundle
-import android.preference.DialogPreference
-import android.preference.PreferenceManager
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.db.*
-import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.listView
 import org.jetbrains.anko.verticalLayout
 import ui.CoordinateListAdapter
@@ -32,13 +29,15 @@ class CoordinateListActivity : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
 
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 99e37a8... なんかいろいろ進んだ
         verticalLayout {
             listView {
                 adapter = CoordinateListAdapter(coordinateList,context)
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,6 +49,7 @@ class CoordinateListActivity : AppCompatActivity() {
         // 保存ボタン
         when (item?.itemId) {
             R.id.save -> {
+<<<<<<< HEAD
                 // changedFlagが立っていれば
                 if (CoordinateListAdapter.changedFlag) {
                     // TODO 保存
@@ -68,8 +68,13 @@ class CoordinateListActivity : AppCompatActivity() {
                 }
                 CoordinateListAdapter.changedFlag = false
                 finish()
+=======
+                // プリファレンスに書き込む
+
+>>>>>>> parent of 99e37a8... なんかいろいろ進んだ
             }
         }
+        finish()
         return super.onOptionsItemSelected(item)
     }
 
