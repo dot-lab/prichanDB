@@ -9,11 +9,11 @@ import org.jetbrains.anko.*
 
 class CoordinateListAdapter(private val context: Context, private val coordinateList: List<ItemData>): BaseAdapter() {
     override fun getView(pos: Int, convertView: View?, parent: ViewGroup?): View =
-        (convertView as? CoordinateListUI ) ?: CoordinateListUI(context,coordinateList).apply{
-            createView(context.UI{ })
-        }.apply {
-            update(pos)
-        }
+            (convertView as? CoordinateListUI) ?: CoordinateListUI(context, coordinateList).apply {
+                createView(context.UI { })
+            }.apply {
+                update(pos)
+            }
 
     override fun getItem(position: Int): Any {
         return coordinateList[position]
