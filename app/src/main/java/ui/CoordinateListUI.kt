@@ -78,7 +78,9 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>): FrameLayout(
                     gravity = Gravity.LEFT
                 }.lparams(dip(100), wrapContent)
             }.lparams(wrapContent, matchParent)
-        }.apply { this@CoordinateListUI.addView(this) }
+        }.apply {
+            this@CoordinateListUI.addView(this)
+        }
     }
 
     fun update(pos: Int) {
