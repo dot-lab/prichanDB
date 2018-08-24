@@ -14,23 +14,26 @@ import xyz.dot_lab.prichandb.R
 import java.io.IOException
 import java.io.InputStream
 
-class CoordinateListAdapter(private val coordinateList: List<ItemData>, private val context: Context, private val checked: MutableSet<String>): BaseAdapter() {
-    companion object {
-        // チェックボックスの値が変更されたかどうか
-        var changedFlag: Boolean = false
-    }
+class CoordinateListAdapter(private val context: Context, private val coordinateList: List<ItemData>): BaseAdapter() {
+    override fun getView(pos: Int, convertView: View?, parent: ViewGroup?): View =
+        (convertView as? CoordinateListUI ) ?: CoordinateListUI(context,coordinateList).apply {
+            createView(context.UI{ })
+        }.apply {
+            update(pos)
+        }
 
     override fun getItem(position: Int): Any {
         return coordinateList[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return coordinateList[position]._id
+        return position.toLong()
     }
 
     override fun getCount(): Int {
         return coordinateList.size
     }
+<<<<<<< HEAD
 
     override fun getView(position: Int, v: View?, parent: ViewGroup?): View {
         // listView の1行分のレイアウトを定義
@@ -172,4 +175,6 @@ class CoordinateListAdapter(private val coordinateList: List<ItemData>, private 
         return false
     }
 
+=======
+>>>>>>> 9d53109dc1534b0309e82f62e7ac3178568a710c
 }
