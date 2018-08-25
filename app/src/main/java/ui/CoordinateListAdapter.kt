@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import entity.ItemData
 import org.jetbrains.anko.*
 
-class CoordinateListAdapter(private val context: Context , private val coordinateList: List<ItemData>, val hasItems:Set<String>): BaseAdapter() {
+class CoordinateListAdapter(private val context: Context , private val coordinateList: List<ItemData>, private val hasItems:Set<String>): BaseAdapter() {
 
     override fun getView(pos: Int, convertView: View?, parent: ViewGroup?): View  =
             ((convertView as? CoordinateListUI) ?: CoordinateListUI(context, coordinateList,hasItems)).apply { update(pos) }

@@ -8,10 +8,12 @@ import android.support.v4.app.DialogFragment
 
 class ConfirmDialog: DialogFragment() {
     val title = "確認"
-    val msg = "保存していない情報があります。保存せずにメインメニューへ戻りますか？"
+    val msg = "情報を保存せずにメインメニューへ戻りますか？"
     val okText = "保存せずに戻る"
     val cancelText = "キャンセル"
-    var onClickListener: DialogInterface.OnClickListener? = DialogInterface.OnClickListener{ _, _ -> }
+    var onClickListener: DialogInterface.OnClickListener? = DialogInterface.OnClickListener{
+        _, _ ->
+    }
     var onCancelClickListener: DialogInterface.OnClickListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

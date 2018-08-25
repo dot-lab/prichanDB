@@ -13,12 +13,12 @@ import android.widget.Toast
 import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
+import org.jetbrains.anko.*
 import org.jetbrains.anko.db.*
-import org.jetbrains.anko.listView
-import org.jetbrains.anko.verticalLayout
 import ui.ConfirmDialog
 import ui.CoordinateListAdapter
 import ui.CoordinateListUI
+import ui.CoordinateListUI.Companion.changedFlag
 
 class CoordinateListActivity : AppCompatActivity() {
     companion object {
@@ -56,26 +56,28 @@ class CoordinateListActivity : AppCompatActivity() {
         // 保存ボタン
         when (item?.itemId) {
             R.id.save -> {
-                if(CoordinateListUI.changedFlag) {
+                return if(CoordinateListUI.changedFlag) {
                     saveToPreference(checkedSet)
-                    Toast.makeText(applicationContext, "入手コーデ情報を保存しました", Toast.LENGTH_SHORT).show()
-                    CoordinateListUI.changedFlag = false
+                    changedFlag = false
                     finish()
+                    true
                 } else {
-                    Toast.makeText(applicationContext, "入手したコーデを選択してください", Toast.LENGTH_SHORT).show()
+                    toast("入手したコーデを選択してください")
+                    true
                 }
             }
             android.R.id.home -> {
-//                if(CoordinateListUI.changedFlag) {
-//                    var dialog = ConfirmDialog()
-//                    dialog.onClickListener = DialogInterface.OnClickListener{
-//                        dialogInterface: DialogInterface, i: Int ->
-//                        Toast.makeText(applicationContext,"メインメニューへ戻ります",Toast.LENGTH_SHORT).show()
-//                    }
-//                    dialog.show(supportFragmentManager,"confirm")
-//                    CoordinateListUI.changedFlag = false
-//                }
-                finish()
+                if(changedFlag) {
+                    val dialog = ConfirmDialog()
+                    dialog.onClickListener = DialogInterface.OnClickListener{
+                        dialogInterface: DialogInterface, i: Int ->
+                        changedFlag = false
+                        finish()
+                    }
+                    dialog.show(supportFragmentManager,"confirm")
+                } else {
+                    finish()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -97,5 +99,6 @@ class CoordinateListActivity : AppCompatActivity() {
         pref.edit()
                 .putStringSet(getString(R.string.prefKey),hasItems)
                 .apply()
+        toast("所持コーデ情報を更新しました")
     }
 }

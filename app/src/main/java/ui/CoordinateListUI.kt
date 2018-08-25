@@ -31,11 +31,9 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set
     private var categoryTextView: TextView? = null
     private var iineTextView: TextView? = null
     private var colorTextView: TextView? = null
-
     companion object {
         var changedFlag = false
     }
-
     init {
         context.UI {
             verticalLayout {
@@ -47,6 +45,7 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set
                     lparams(wrapContent, matchParent)
                     hasCheckBox = checkBox {
                         gravity = Gravity.CENTER
+                        tag = false
                     }.lparams(wrapContent, matchParent)
                     numberTextView = textView {
                         padding = dip(5)
@@ -94,18 +93,19 @@ class CoordinateListUI(context: Context, itemList: List<ItemData>, hasItems: Set
 
     fun update(pos: Int) {
         numberTextView?.text = list[pos].number
+        hasCheckBox?.isChecked = itemSet.contains(list[pos].number)
+        hasCheckBox?.isEnabled = !itemSet.contains(list[pos].number)
+        hasCheckBox?.setOnClickListener {
+            changedFlag = true
+        }
         hasCheckBox?.setOnCheckedChangeListener {
             compoundButton: CompoundButton, b: Boolean ->
             if(hasCheckBox?.isChecked!!){
-                changedFlag = true
                 CoordinateListActivity.checkedSet.add(list[pos].number)
             } else {
                 CoordinateListActivity.checkedSet.remove(list[pos].number)
             }
         }
-        hasCheckBox?.isChecked = itemSet.contains(list[pos].number)
-        hasCheckBox?.isEnabled = !itemSet.contains(list[pos].number)
-
         realityTextView?.text = when(list[pos].reality.toInt()) {
             1 -> context.getString(R.string.n)
             2 -> context.getString(R.string.r)
