@@ -10,13 +10,13 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
-import android.widget.LinearLayout
+import android.widget.ArrayAdapter
 import db.CoordinateDatabaseOpenHelper
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
-import org.jetbrains.anko.design.snackbar
 import ui.CoordinateGroupListAdapter
 import java.io.IOException
+import java.lang.reflect.Array
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +47,22 @@ class MainActivity : AppCompatActivity() {
                 marginEnd = dip(16)
                 gravity = Gravity.BOTTOM or Gravity.END
             }.setOnClickListener {
-                toast("fab")
+                alert {
+                    title = "検索"
+                    customView {
+                        linearLayout {
+                            padding = dip(10)
+                            spinner {
+                                // adapter
+                            }
+                            switch {
+                                text = "持っているコーデを表示しない"
+                            }
+                        }
+                    }
+                    yesButton { }
+                    noButton {  }
+                }.show()
             }
         }
 
