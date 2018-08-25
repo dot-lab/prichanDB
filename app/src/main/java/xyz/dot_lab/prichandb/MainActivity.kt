@@ -14,9 +14,8 @@ import android.widget.AdapterView
 import db.CoordinateDatabaseOpenHelper
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
-import ui.SearchDialog
+import dialog.SearchDialog
 import adapter.CoordinateGroupListAdapter
-import kotlinx.android.synthetic.main.coordinate.view.*
 import java.io.IOException
 
 

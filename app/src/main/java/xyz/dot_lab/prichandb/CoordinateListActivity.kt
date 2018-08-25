@@ -11,7 +11,7 @@ import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.*
-import ui.ConfirmDialog
+import dialog.ConfirmDialog
 import adapter.CoordinateListAdapter
 import ui.CoordinateListUI
 import ui.CoordinateListUI.Companion.changedFlag

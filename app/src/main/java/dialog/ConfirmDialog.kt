@@ -1,4 +1,4 @@
-package ui
+package dialog
 
 import android.app.AlertDialog
 import android.app.Dialog

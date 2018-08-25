@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import entity.ItemData
-import kotlinx.android.synthetic.main.coordinate.view.*
 import org.jetbrains.anko.*
 import org.w3c.dom.Text
 import xyz.dot_lab.prichandb.CoordinateListActivity
