@@ -1,10 +1,11 @@
-package ui
+package adapter
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import org.jetbrains.anko.UI
+import ui.CoordinateGroupListUI
 
 class CoordinateGroupListAdapter(var context: Context, groupList: MutableList<String>): BaseAdapter() {
     private var list = groupList
@@ -21,7 +22,7 @@ class CoordinateGroupListAdapter(var context: Context, groupList: MutableList<St
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View =
-            (convertView as? CoordinateGroupListUI) ?: CoordinateGroupListUI(context,list).apply {
+            (convertView as? CoordinateGroupListUI) ?: CoordinateGroupListUI(context, list).apply {
                 createView(context.UI {  })
             }.apply {
                 update(position)
