@@ -18,6 +18,9 @@
         <activity android:name=".CoordinateListActivity">
 
         </activity>
+        <activity android:name="SearchBox" android:theme="@android:style/Theme.Holo.Dialog">
+
+        </activity>
     </application>
 
 </manifest>

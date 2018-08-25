@@ -16,16 +16,17 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import dialog.SearchDialog
 import adapter.CoordinateGroupListAdapter
+import kotlinx.android.synthetic.main.custom.*
+import kotlinx.android.synthetic.main.custom.view.*
 import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dataBase: SQLiteDatabase
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val groupNameList = getGroupNameList()
         var intent = Intent(applicationContext,CoordinateListActivity::class.java)
+        val groupNameList = getGroupNameList()
 
         frameLayout {
             listView {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/searchWindow"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <Spinner
         android:id="@+id/spinner"
@@ -20,5 +20,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-3dp"
         android:gravity="center_vertical|center"
-        android:text="Switch" />
+        android:text="所持しているコーデは表示しない" />
 </RelativeLayout>
