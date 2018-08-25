@@ -1,5 +1,6 @@
 package xyz.dot_lab.prichandb
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -10,13 +11,13 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import db.CoordinateDatabaseOpenHelper
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
-import ui.CoordinateGroupListAdapter
+import ui.SearchDialog
+import adapter.CoordinateGroupListAdapter
+import kotlinx.android.synthetic.main.coordinate.view.*
 import java.io.IOException
-import java.lang.reflect.Array
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,22 +48,12 @@ class MainActivity : AppCompatActivity() {
                 marginEnd = dip(16)
                 gravity = Gravity.BOTTOM or Gravity.END
             }.setOnClickListener {
-                alert {
-                    title = "検索"
-                    customView {
-                        linearLayout {
-                            padding = dip(10)
-                            spinner {
-                                // adapter
-                            }
-                            switch {
-                                text = "持っているコーデを表示しない"
-                            }
-                        }
-                    }
-                    yesButton { }
-                    noButton {  }
-                }.show()
+                val alert = SearchDialog()
+                alert.onClickListener = DialogInterface.OnClickListener{
+                    dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+                alert.show(supportFragmentManager,"Search")
             }
         }
 

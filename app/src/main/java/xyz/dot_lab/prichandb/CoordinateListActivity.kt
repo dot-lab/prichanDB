@@ -2,21 +2,17 @@ package xyz.dot_lab.prichandb
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.preference.DialogPreference
 import android.preference.PreferenceManager
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import db.CoordinateDatabaseOpenHelper
 import db.ItemDataParser
 import entity.ItemData
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.*
 import ui.ConfirmDialog
-import ui.CoordinateListAdapter
+import adapter.CoordinateListAdapter
 import ui.CoordinateListUI
 import ui.CoordinateListUI.Companion.changedFlag
 
@@ -41,7 +37,7 @@ class CoordinateListActivity : AppCompatActivity() {
 
         verticalLayout {
             listView {
-                adapter = CoordinateListAdapter(context,coordinateList,pref.getStringSet(getString(R.string.prefKey), setOf()))
+                adapter = CoordinateListAdapter(context, coordinateList, pref.getStringSet(getString(R.string.prefKey), setOf()))
             }
         }
 
