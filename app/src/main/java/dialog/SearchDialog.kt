@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.custom.view.*
 import xyz.dot_lab.prichandb.R
 
@@ -20,8 +21,9 @@ class SearchDialog: DialogFragment() {
     var onCancelClickListener: DialogInterface.OnClickListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        val inflater: LayoutInflater = LayoutInflater.from(context)
-//        customView = inflater.inflate(R.layout.custom, null)
+        val inflater: LayoutInflater = LayoutInflater.from(context)
+        customView = inflater.inflate(R.layout.custom, null)
+
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
                 .setMessage("")
@@ -30,5 +32,4 @@ class SearchDialog: DialogFragment() {
                 .setNegativeButton(cancelText, onCancelClickListener)
         return builder.create()
     }
-
 }

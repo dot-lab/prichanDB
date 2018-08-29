@@ -16,6 +16,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.design.floatingActionButton
 import dialog.SearchDialog
 import adapter.CoordinateGroupListAdapter
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import kotlinx.android.synthetic.main.custom.*
 import kotlinx.android.synthetic.main.custom.view.*
 import java.io.IOException
@@ -48,12 +50,8 @@ class MainActivity : AppCompatActivity() {
                 marginEnd = dip(16)
                 gravity = Gravity.BOTTOM or Gravity.END
             }.setOnClickListener {
-                val alert = SearchDialog()
-                alert.onClickListener = DialogInterface.OnClickListener{
-                    dialogInterface, i ->
-                    dialogInterface.dismiss()
-                }
-                alert.show(supportFragmentManager,"Search")
+                val searchDialog = SearchDialog()
+                searchDialog.show(supportFragmentManager,"search")
             }
         }
 

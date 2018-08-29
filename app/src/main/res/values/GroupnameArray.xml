@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="GroupNames">
+        <item>第2弾</item>
+        <item>第1弾</item>
+        <item>プロモ：2018年7～9月</item>
+        <item>プロモ：2018年4～6月</item>
+        <item>なかよしチャンネル</item>
+        <item>SweetHoneyチャンネル</item>
+        <item>SecretAliceチャンネル</item>
+        <item>RomanceBeatチャンネル</item>
+        <item>GirlsYellチャンネル</item>
+        <item>DollyWaltzチャンネル</item>
+
+
+
+
+    </string-array>
+</resources>
