@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataBase: SQLiteDatabase
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var intent = Intent(applicationContext,CoordinateListActivity::class.java)
         val groupNameList = getGroupNameList()
         frameLayout {
             listView {
@@ -35,29 +34,59 @@ class MainActivity : AppCompatActivity() {
                 onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, position: Int, id: Long ->
                     // タップしたグループ名を取得
                     var groupName = adapterView.getItemAtPosition(position).toString()
-                    // インテントでアクティビティを変更
-                    intent.putExtra("groupName", groupName)
-                    startActivity(intent)
+                    startActivity<CoordinateListActivity>("groupName" to groupName)
                 }
             }
-            floatingActionButton {
-                imageResource = android.R.drawable.ic_menu_search
-                size = dip(24)
-            }.lparams {
-                wrapContent
-                margin = dip(10)
-                marginEnd = dip(16)
-                gravity = Gravity.BOTTOM or Gravity.END
-            }.setOnClickListener {
-                val searchDialog = SearchDialog()
-                searchDialog.onClickListener = DialogInterface.OnClickListener {
-                    dialogInterface: DialogInterface, i: Int ->
-
-                }
-                searchDialog.show(supportFragmentManager,"search")
-            }
+//            floatingActionButton {
+//                imageResource = android.R.drawable.ic_menu_search
+//                size = dip(24)
+//            }.lparams {
+//                wrapContent
+//                margin = dip(10)
+//                marginEnd = dip(16)
+//                gravity = Gravity.BOTTOM or Gravity.END
+//            }.setOnClickListener {
+//                val search = with(this@MainActivity) {
+//                    alert("", "コーデ検索") {
+//                        customView {
+//                            verticalLayout {
+//                                textView {
+//                                    text = "検索対象"
+//                                    padding = dip(10)
+//                                }
+//                                spinner {
+//                                    adapter = ArrayAdapter.createFromResource(applicationContext, R.array.GroupNames, android.R.layout.simple_spinner_dropdown_item)
+//                                    onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                                        override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//                                        }
+//
+//                                        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                                            toast(selectedItem.toString())
+//                                        }
+//                                    }
+//                                }
+//                                radioGroup {
+//                                    radioButton {
+//                                        text = "すべて表示"
+//                                    }
+//                                    radioButton {
+//                                        text = "所持コーデのみ表示"
+//                                    }
+//                                    radioButton {
+//                                        text = "未所持コーデのみ表示"
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        yesButton {
+//
+//                        }
+//                        noButton { }
+//                    }.show()
+//                }
+//            }
         }
-
     }
     // データベースを呼び出す
     private fun setDatabase(helper: CoordinateDatabaseOpenHelper) {

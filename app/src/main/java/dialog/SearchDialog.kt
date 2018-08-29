@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import kotlinx.android.synthetic.main.custom.view.*
+import org.jetbrains.anko.toast
 import xyz.dot_lab.prichandb.MainActivity
 import xyz.dot_lab.prichandb.R
 
