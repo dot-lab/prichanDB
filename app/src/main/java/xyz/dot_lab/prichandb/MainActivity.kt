@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var intent = Intent(applicationContext,CoordinateListActivity::class.java)
         val groupNameList = getGroupNameList()
-
         frameLayout {
             listView {
                 adapter = CoordinateGroupListAdapter(context, groupNameList)
@@ -51,6 +50,10 @@ class MainActivity : AppCompatActivity() {
                 gravity = Gravity.BOTTOM or Gravity.END
             }.setOnClickListener {
                 val searchDialog = SearchDialog()
+                searchDialog.onClickListener = DialogInterface.OnClickListener {
+                    dialogInterface: DialogInterface, i: Int ->
+
+                }
                 searchDialog.show(supportFragmentManager,"search")
             }
         }

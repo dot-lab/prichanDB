@@ -8,7 +8,9 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import kotlinx.android.synthetic.main.custom.view.*
+import xyz.dot_lab.prichandb.MainActivity
 import xyz.dot_lab.prichandb.R
 
 class SearchDialog: DialogFragment() {
@@ -23,7 +25,6 @@ class SearchDialog: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         customView = inflater.inflate(R.layout.custom, null)
-
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
                 .setMessage("")
