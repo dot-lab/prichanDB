@@ -23,6 +23,10 @@ class CoordinateListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
+
+        // TODO 起動元アクティビティで条件分岐
+        // TODO Mainからなら：intentから受け取ったStringを元にList<ItemData>を生成、表示
+        // TODO Searchからなら：intentから受け取ったList<ItemData>を表示
         val selectedGroupName: String = intent.getStringExtra("groupName")
         val coordinateList: List<ItemData> = getCoordinateList(selectedGroupName)
 
