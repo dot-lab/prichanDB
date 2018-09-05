@@ -25,8 +25,8 @@ import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
-    private val REQUEST_CODE: Int = 1
     private lateinit var dataBase: SQLiteDatabase
+    private val REQUEST_CODE: Int = 1
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             val groupNameList = getGroupNameList()
@@ -35,10 +35,10 @@ class MainActivity : AppCompatActivity() {
                     adapter = CoordinateGroupListAdapter(context, groupNameList)
                     onItemClickListener = AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, position: Int, id: Long ->
                         // タップしたグループ名を取得
-                        var groupName = adapterView.getItemAtPosition(position).toString()
+                        val groupName:String = adapterView.getItemAtPosition(position).toString()
+                        val intent = Intent(applicationContext,CoordinateListActivity::class.java)
                         intent.putExtra("groupName",groupName)
                         startActivityForResult(intent,REQUEST_CODE)
-                        //startActivity<CoordinateListActivity>("groupName" to groupName)
                     }
                 }
                 floatingActionButton {
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                     marginEnd = dip(16)
                     gravity = Gravity.BOTTOM or Gravity.END
                 }.setOnClickListener {
+                    val intent = Intent(applicationContext,SearchActivity::class.java)
                     startActivityForResult(intent, REQUEST_CODE)
                 }
             }

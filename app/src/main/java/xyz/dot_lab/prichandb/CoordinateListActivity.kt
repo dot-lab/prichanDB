@@ -13,6 +13,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.db.*
 import dialog.ConfirmDialog
 import adapter.CoordinateListAdapter
+import android.util.Log
 import ui.CoordinateListUI
 import ui.CoordinateListUI.Companion.changedFlag
 
@@ -22,28 +23,45 @@ class CoordinateListActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = intent
 
-        // TODO 起動元アクティビティで条件分岐
-        // TODO Mainからなら：intentから受け取ったStringを元にList<ItemData>を生成、表示
-        // TODO Searchからなら：intentから受け取ったList<ItemData>を表示
-        val selectedGroupName: String = intent.getStringExtra("groupName")
-        val coordinateList: List<ItemData> = getCoordinateList(selectedGroupName)
+        // 起動元のアクティビティで分岐
+        when(callingActivity.className) {
+            "xyz.dot_lab.prichandb.MainActivity" -> {
+                val selectedGroupName: String = intent.getStringExtra("groupName")
+                val coordinateList: List<ItemData> = getCoordinateListFromGroupName(selectedGroupName)
 
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.title = selectedGroupName
-            actionBar.setDisplayHomeAsUpEnabled(true)
+                val actionBar = supportActionBar
+                if (actionBar != null) {
+                    actionBar.title = selectedGroupName
+                    actionBar.setDisplayHomeAsUpEnabled(true)
 
-        }
+                }
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
-        verticalLayout {
-            listView {
-                adapter = CoordinateListAdapter(context, coordinateList, pref.getStringSet(getString(R.string.prefKey), setOf()))
+                verticalLayout {
+                    listView {
+                        adapter = CoordinateListAdapter(context, coordinateList, pref.getStringSet(getString(R.string.prefKey), setOf()))
+                    }
+                }
+            }
+            "xyz.dot_lab.prichandb.SearchActivity" -> {
+
+                val actionBar = supportActionBar
+                if (actionBar != null) {
+                    actionBar.title = "検索結果"
+                    actionBar.setDisplayHomeAsUpEnabled(true)
+
+                }
+
+                verticalLayout {
+                    textView {
+                        text = "From SearchActivity"
+                    }
+                }
             }
         }
+
 
     }
 
@@ -84,7 +102,7 @@ class CoordinateListActivity : AppCompatActivity() {
     }
 
     // コーデアイテムのリストを取得
-    private fun getCoordinateList(groupName: String): List<ItemData> {
+    private fun getCoordinateListFromGroupName(groupName: String): List<ItemData> {
         val dbHelper = CoordinateDatabaseOpenHelper.getInstance(applicationContext)
         var coordinateList: List<ItemData> = listOf()
         dbHelper.openReadableDatabase()
@@ -93,6 +111,7 @@ class CoordinateListActivity : AppCompatActivity() {
         }
         return coordinateList
     }
+    // プリファレンスに保存
     private fun saveToPreference(checkedItems: MutableSet<String>) {
         val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         var hasItems = pref.getStringSet(getString(R.string.prefKey), mutableSetOf()) + checkedItems
