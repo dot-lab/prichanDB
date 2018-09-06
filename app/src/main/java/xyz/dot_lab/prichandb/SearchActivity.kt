@@ -7,11 +7,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import android.widget.Spinner
 import org.jetbrains.anko.*
 
 class SearchActivity: AppCompatActivity() {
     private val REQUEST_CODE: Int = 1
+    var radio1: RadioButton? = null
+    var radio2: RadioButton? = null
+    var radio3: RadioButton? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,32 +30,34 @@ class SearchActivity: AppCompatActivity() {
                 text = "検索対象"
             }
             spinner {
-                val adapter = ArrayAdapter.createFromResource(applicationContext,R.array.GroupNames,android.R.layout.simple_spinner_item)
-                (adapter as ArrayAdapter<CharSequence>).setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                val items = resources.getStringArray(R.array.GroupNames)
+                val adapter: ArrayAdapter<String> = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, items)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 this.adapter = adapter
-            }.onItemSelectedListener =  object : AdapterView.OnItemSelectedListener {
+            }.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
+
                 override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     val groupNameSpinner: Spinner = parent as Spinner
                     val selected: String = groupNameSpinner.selectedItem.toString()
                     toast(selected)
                 }
             }
-
             textView {
                 text = "表示対象"
             }
             radioGroup {
-                radioButton {
+                radio1 = radioButton {
                     text = "所持コーデのみ表示"
                 }
-                radioButton {
+                radio2 = radioButton {
                     text = "未所持コーデのみ表示"
                 }
-                radioButton {
+                radio3 = radioButton {
                     text = "すべて表示"
                 }
+                check(radio1!!.id)
             }
             button {
                 text = "検索"
